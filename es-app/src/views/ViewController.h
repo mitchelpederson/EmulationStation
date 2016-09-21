@@ -2,6 +2,7 @@
 
 #include "views/gamelist/IGameListView.h"
 #include "views/SystemView.h"
+#include <ctime>
 
 class SystemData;
 
@@ -82,6 +83,8 @@ private:
 	Eigen::Affine3f mCamera;
 	float mFadeOpacity;
 	bool mLockInput;
+
+	clock_t timeX, timeY, timeStart;
 
 	State mState;
 };

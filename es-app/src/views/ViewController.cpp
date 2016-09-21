@@ -27,7 +27,7 @@ void ViewController::init(Window* window)
 }
 
 ViewController::ViewController(Window* window)
-	: GuiComponent(window), mCurrentView(nullptr), mCamera(Eigen::Affine3f::Identity()), mFadeOpacity(0), mLockInput(false)
+	: GuiComponent(window), mCurrentView(nullptr), mCamera(Eigen::Affine3f::Identity()), mFadeOpacity(0), mLockInput(false), timeX(0), timeY(0), timeStart(0)
 {
 	mState.viewing = NOTHING;
 }
@@ -44,7 +44,11 @@ void ViewController::goToStart()
 	/* mState.viewing = START_SCREEN;
 	mCurrentView.reset();
 	playViewTransition(); */
-	goToSystemView(SystemData::sSystemVector.at(0));
+	
+		// Goes immediately to the game list for MAME, instead of to the system list
+	goToGameList(SystemData::sSystemVector.at(0));
+		
+	//goToSystemView(SystemData::sSystemVector.at(0));	// go to system list
 }
 
 int ViewController::getSystemId(SystemData* system)
@@ -258,12 +262,38 @@ bool ViewController::input(InputConfig* config, Input input)
 	if(mLockInput)
 		return true;
 
+	
+
 	// open menu
-	if(config->isMappedTo("start", input) && input.value != 0)
-	{
-		// open menu
-		mWindow->pushGui(new GuiMenu(mWindow));
-		return true;
+	//if(config->isMappedTo("start", input) && config->isMappedTo("y", input) && config->isMappedTo("x", input) && input.value != 0)
+	if(config->isMappedTo("start", input) && input.value != 0)	
+	{	
+		timeStart = clock();
+		if (((timeStart - timeX) / CLOCKS_PER_SEC) < 0.3 && ((timeStart - timeY) / CLOCKS_PER_SEC) < 0.3) {
+			// open menu
+			mWindow->pushGui(new GuiMenu(mWindow));
+			return true;
+		}
+	}
+
+	if(config->isMappedTo("x", input) && input.value != 0)	
+	{	
+		timeX = clock();
+		if (((timeX - timeStart) / CLOCKS_PER_SEC) < 0.3 && ((timeX - timeY) / CLOCKS_PER_SEC) < 0.3) {
+			// open menu
+			mWindow->pushGui(new GuiMenu(mWindow));
+			return true;
+		}
+	}
+
+	if(config->isMappedTo("y", input) && input.value != 0)	
+	{	
+		timeY = clock();
+		if (((timeY - timeX) / CLOCKS_PER_SEC) < 0.3 && ((timeY - timeStart) / CLOCKS_PER_SEC) < 0.3) {
+			// open menu
+			mWindow->pushGui(new GuiMenu(mWindow));
+			return true;
+		}
 	}
 
 	if(mCurrentView)

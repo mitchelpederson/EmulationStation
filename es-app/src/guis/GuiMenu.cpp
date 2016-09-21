@@ -33,7 +33,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 	// [version]
 
 	auto openScrapeNow = [this] { mWindow->pushGui(new GuiScraperStart(mWindow)); };
-	addEntry("SCRAPER", 0x777777FF, true, 
+	/*addEntry("SCRAPER", 0x777777FF, true, 
 		[this, openScrapeNow] { 
 			auto s = new GuiSettings(mWindow, "SCRAPER");
 
@@ -85,7 +85,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 
 			mWindow->pushGui(s);
 	});
-
+*/
 	addEntry("UI SETTINGS", 0x777777FF, true,
 		[this] {
 			auto s = new GuiSettings(mWindow, "UI SETTINGS");
@@ -165,7 +165,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 			mWindow->pushGui(s);
 	});
 
-	addEntry("OTHER SETTINGS", 0x777777FF, true,
+	/*addEntry("OTHER SETTINGS", 0x777777FF, true,
 		[this] {
 			auto s = new GuiSettings(mWindow, "OTHER SETTINGS");
 
@@ -181,7 +181,7 @@ GuiMenu::GuiMenu(Window* window) : GuiComponent(window), mMenu(window, "MAIN MEN
 			s->addSaveFunc([parse_gamelists] { Settings::getInstance()->setBool("ParseGamelistOnly", parse_gamelists->getState()); });
 
 			mWindow->pushGui(s);
-	});
+	});*/
 
 	addEntry("CONFIGURE INPUT", 0x777777FF, true, 
 		[this] { 
