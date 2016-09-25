@@ -30,7 +30,7 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root) :
 	addChild(&mImage);
 
 	// metadata labels + values
-	mLblRating.setText("Rating: ");
+	/*mLblRating.setText("Rating: ");
 	addChild(&mLblRating);
 	addChild(&mRating);
 	mLblReleaseDate.setText("Released: ");
@@ -54,17 +54,17 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root) :
 	addChild(&mLastPlayed);
 	mLblPlayCount.setText("Times played: ");
 	addChild(&mLblPlayCount);
-	addChild(&mPlayCount);
+	addChild(&mPlayCount);*/
 
-	mDescContainer.setPosition(mSize.x() * padding, mSize.y() * 0.65f);
+	/*mDescContainer.setPosition(mSize.x() * padding, mSize.y() * 0.65f);
 	mDescContainer.setSize(mSize.x() * (0.50f - 2*padding), mSize.y() - mDescContainer.getPosition().y());
 	mDescContainer.setAutoScroll(true);
-	addChild(&mDescContainer);
+	addChild(&mDescContainer);*/
 
-	mDescription.setFont(Font::get(FONT_SIZE_SMALL));
+	/*mDescription.setFont(Font::get(FONT_SIZE_SMALL));
 	mDescription.setSize(mDescContainer.getSize().x(), 0);
 	mDescContainer.addChild(&mDescription);
-
+*/
 
 	initMDLabels();
 	initMDValues();

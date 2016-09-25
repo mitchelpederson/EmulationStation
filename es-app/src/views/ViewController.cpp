@@ -269,7 +269,7 @@ bool ViewController::input(InputConfig* config, Input input)
 	if(config->isMappedTo("start", input) && input.value != 0)	
 	{	
 		timeStart = clock();
-		if (((timeStart - timeX) / CLOCKS_PER_SEC) < 0.3 && ((timeStart - timeY) / CLOCKS_PER_SEC) < 0.3) {
+		if (((timeStart - timeX) / (float) CLOCKS_PER_SEC) < 0.1 && ((timeStart - timeY) / (float) CLOCKS_PER_SEC) < 0.1) {
 			// open menu
 			mWindow->pushGui(new GuiMenu(mWindow));
 			return true;
@@ -279,7 +279,7 @@ bool ViewController::input(InputConfig* config, Input input)
 	if(config->isMappedTo("x", input) && input.value != 0)	
 	{	
 		timeX = clock();
-		if (((timeX - timeStart) / CLOCKS_PER_SEC) < 0.3 && ((timeX - timeY) / CLOCKS_PER_SEC) < 0.3) {
+		if (((timeX - timeStart) / (float) CLOCKS_PER_SEC) < 0.1 && ((timeX - timeY) / (float) CLOCKS_PER_SEC) < 0.1) {
 			// open menu
 			mWindow->pushGui(new GuiMenu(mWindow));
 			return true;
@@ -289,7 +289,7 @@ bool ViewController::input(InputConfig* config, Input input)
 	if(config->isMappedTo("y", input) && input.value != 0)	
 	{	
 		timeY = clock();
-		if (((timeY - timeX) / CLOCKS_PER_SEC) < 0.3 && ((timeY - timeStart) / CLOCKS_PER_SEC) < 0.3) {
+		if (((timeY - timeX) / (float) CLOCKS_PER_SEC) < 0.1 && ((timeY - timeStart) / (float) CLOCKS_PER_SEC) < 0.1) {
 			// open menu
 			mWindow->pushGui(new GuiMenu(mWindow));
 			return true;

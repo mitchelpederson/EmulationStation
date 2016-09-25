@@ -104,6 +104,9 @@ private:
 	std::shared_ptr<Sound> mScrollSound;
 	static const unsigned int COLOR_ID_COUNT = 2;
 	unsigned int mColors[COLOR_ID_COUNT];
+
+	void drawText(int item, float yOffset, std::shared_ptr<Font>& font, Eigen::Affine3f& trans);
+
 };
 
 template <typename T>
@@ -139,8 +142,10 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 
 	int startEntry = 0;
 
+
+
 	//number of entries that can fit on the screen simultaniously
-	int screenCount = (int)(mSize.y() / entrySize + 0.5f);
+	/*int screenCount = (int)(mSize.y() / entrySize + 0.5f);
 	
 	if(size() >= screenCount)
 	{
@@ -149,7 +154,25 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 			startEntry = 0;
 		if(startEntry >= size() - screenCount)
 			startEntry = size() - screenCount;
+	}*/
+
+
+
+		// Edited by Mitchel Pederson
+	int screenCount = 5;
+	if (size() >= screenCount) {
+
+		startEntry = mCursor - 2;
+		if(startEntry < 0) {
+			startEntry = 0;
+		}
+
+		else if (startEntry >= size() - screenCount) {
+			startEntry = size() - screenCount;
+		}
 	}
+		// End edits
+
 
 	float y = 0;
 
@@ -161,7 +184,12 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 	if(startEntry < listCutoff)
 	{
 		Renderer::setMatrix(trans);
-		Renderer::drawRect(0.f, (mCursor - startEntry)*entrySize + (entrySize - font->getHeight())/2, mSize.x(), font->getHeight(), mSelectorColor);
+		Renderer::drawRect(48.f,-(font->getHeight() / 2), mSize.x() - 96.f, 2 * font->getHeight(), mSelectorColor + 0x22220000);
+		Renderer::drawRect(24.f, (1 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x() - 48.f, 2 * font->getHeight(), mSelectorColor + 0x11110000);
+		Renderer::drawRect(0.f, (2 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x(), 2 * font->getHeight(), mSelectorColor);
+		Renderer::drawRect(24.f, (3 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x() - 48.f, 2 * font->getHeight(), mSelectorColor + 0x11110000);
+		Renderer::drawRect(48.f, (4 * mSize.y() / 5) -(font->getHeight() / 2), mSize.x() - 96.f, 2 * font->getHeight(), mSelectorColor + 0x22220000);
+		
 	}
 
 	// clip to inside margins
@@ -170,9 +198,57 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 	Renderer::pushClipRect(Eigen::Vector2i((int)(trans.translation().x() + mHorizontalMargin), (int)trans.translation().y()), 
 		Eigen::Vector2i((int)(dim.x() - mHorizontalMargin*2), (int)dim.y()));
 
-	for(int i = startEntry; i < listCutoff; i++)
+
+		// Start edits
+
+		// First entry. If we are at position 0 or 1, get the last one or two games
+	if (mCursor == 0) {
+		drawText(size() - 2, 0, font, trans);
+	}
+	else if (mCursor == 1) {
+		drawText(size() - 1, 0, font, trans);
+	}
+	else {
+		drawText(mCursor - 2, 0, font, trans); 
+	}
+
+		// Second entry
+	if (mCursor == 0) {
+		drawText(size() - 1, 1 * mSize.y() / 5, font, trans);
+	}
+	else {
+		drawText(mCursor - 1, 1 * mSize.y() / 5, font, trans);
+	}
+
+		// Third entry
+	drawText(mCursor, 2 * mSize.y() / 5, font, trans);
+
+		// Fourth entry
+	if (mCursor == size() - 1) {
+		drawText(0, 3 * mSize.y() / 5, font, trans);
+	}
+	else {
+		drawText(mCursor + 1, 3 * mSize.y() / 5, font, trans);
+	}
+
+		// Fifth entry
+	if (mCursor == size() - 2) {
+		drawText(0, 4 * mSize.y() / 5, font, trans);
+	}
+	else if (mCursor == size() - 1) {
+		drawText(1, 4 * mSize.y() / 5, font, trans);
+	}
+	else {
+		drawText(mCursor + 2, 4 * mSize.y() / 5, font, trans); 
+	}
+		
+		// End edits
+	
+
+
+	/*for(int i = startEntry; i < listCutoff; i++)
 	{
-		typename IList<TextListData, T>::Entry& entry = mEntries.at((unsigned int)i);
+		/*typename IList<TextListData, T>::Entry& entry = mEntries.at((unsigned int) i);
 
 		unsigned int color;
 		if(mCursor == i && mSelectedColor)
@@ -214,8 +290,11 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 
 		font->renderTextCache(entry.data.textCache.get());
 		
+		
+
+		drawText(i, y, font, trans);
 		y += entrySize;
-	}
+	}*/
 
 	Renderer::popClipRect();
 
@@ -223,6 +302,54 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 
 	GuiComponent::renderChildren(trans);
 }
+
+template <typename T>
+void TextListComponent<T>::drawText(int item, float yOffset, std::shared_ptr<Font>& font, Eigen::Affine3f& trans) {
+
+	typename IList<TextListData, T>::Entry& entry = mEntries.at(item);
+
+	unsigned int color;
+	if(mCursor == item && mSelectedColor)
+		color = mSelectedColor;
+	else
+		color = mColors[entry.data.colorId];
+
+	if(!entry.data.textCache)
+		entry.data.textCache = std::unique_ptr<TextCache>(font->buildTextCache(mUppercase ? strToUpper(entry.name) : entry.name, 0, 0, 0x000000FF));
+
+	entry.data.textCache->setColor(color);
+
+	Eigen::Vector3f offset(0, yOffset, 0);
+
+	/*switch(mAlignment)
+	{
+	case ALIGN_LEFT:
+		offset[0] = mHorizontalMargin;
+		break;
+	case ALIGN_CENTER:*/
+		offset[0] = (mSize.x() - entry.data.textCache->metrics.size.x()) / 2;
+		if(offset[0] < 0)
+			offset[0] = 0;
+		/*break;
+	case ALIGN_RIGHT:
+		offset[0] = (mSize.x() - entry.data.textCache->metrics.size.x());
+		offset[0] -= mHorizontalMargin;
+		if(offset[0] < 0)
+			offset[0] = 0;
+		break;
+	}*/
+
+	if(mCursor == item)
+		offset[0] -= mMarqueeOffset;
+
+	Eigen::Affine3f drawTrans = trans;
+	drawTrans.translate(offset);
+	Renderer::setMatrix(drawTrans);
+
+	font->renderTextCache(entry.data.textCache.get());
+
+}
+
 
 template <typename T>
 bool TextListComponent<T>::input(InputConfig* config, Input input)
