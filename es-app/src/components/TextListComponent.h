@@ -105,7 +105,7 @@ private:
 	static const unsigned int COLOR_ID_COUNT = 2;
 	unsigned int mColors[COLOR_ID_COUNT];
 
-	void drawText(int item, float yOffset, std::shared_ptr<Font>& font, Eigen::Affine3f& trans);
+	void drawText(int item, float xOffset, float yOffset, std::shared_ptr<Font>& font, Eigen::Affine3f& trans);
 
 };
 
@@ -184,11 +184,11 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 	if(startEntry < listCutoff)
 	{
 		Renderer::setMatrix(trans);
-		Renderer::drawRect(48.f,-(font->getHeight() / 2), mSize.x() - 96.f, 2 * font->getHeight(), mSelectorColor + 0x22220000);
-		Renderer::drawRect(24.f, (1 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x() - 48.f, 2 * font->getHeight(), mSelectorColor + 0x11110000);
+		Renderer::drawRect(48.f,-(font->getHeight() / 2), mSize.x() - 96.f, 2 * font->getHeight(), mSelectorColor + 0x44440000);
+		Renderer::drawRect(24.f, (1 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x() - 48.f, 2 * font->getHeight(), mSelectorColor + 0x22220000);
 		Renderer::drawRect(0.f, (2 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x(), 2 * font->getHeight(), mSelectorColor);
-		Renderer::drawRect(24.f, (3 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x() - 48.f, 2 * font->getHeight(), mSelectorColor + 0x11110000);
-		Renderer::drawRect(48.f, (4 * mSize.y() / 5) -(font->getHeight() / 2), mSize.x() - 96.f, 2 * font->getHeight(), mSelectorColor + 0x22220000);
+		Renderer::drawRect(24.f, (3 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x() - 48.f, 2 * font->getHeight(), mSelectorColor + 0x22220000);
+		Renderer::drawRect(48.f, (4 * mSize.y() / 5) -(font->getHeight() / 2), mSize.x() - 96.f, 2 * font->getHeight(), mSelectorColor + 0x44440000);
 		
 	}
 
@@ -196,50 +196,50 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 	Eigen::Vector3f dim(mSize.x(), mSize.y(), 0);
 	dim = trans * dim - trans.translation();
 	Renderer::pushClipRect(Eigen::Vector2i((int)(trans.translation().x() + mHorizontalMargin), (int)trans.translation().y()), 
-		Eigen::Vector2i((int)(dim.x() - mHorizontalMargin*2), (int)dim.y()));
+		Eigen::Vector2i((int)(dim.x() - mHorizontalMargin*2 - 48.f), (int)dim.y()));
 
 
 		// Start edits
 
 		// First entry. If we are at position 0 or 1, get the last one or two games
 	if (mCursor == 0) {
-		drawText(size() - 2, 0, font, trans);
+		drawText(size() - 2, 48.f, 0, font, trans);
 	}
 	else if (mCursor == 1) {
-		drawText(size() - 1, 0, font, trans);
+		drawText(size() - 1, 48.f, 0, font, trans);
 	}
 	else {
-		drawText(mCursor - 2, 0, font, trans); 
+		drawText(mCursor - 2, 48.f, 0, font, trans); 
 	}
 
 		// Second entry
 	if (mCursor == 0) {
-		drawText(size() - 1, 1 * mSize.y() / 5, font, trans);
+		drawText(size() - 1, 24.f, 1 * mSize.y() / 5, font, trans);
 	}
 	else {
-		drawText(mCursor - 1, 1 * mSize.y() / 5, font, trans);
+		drawText(mCursor - 1, 24.f, 1 * mSize.y() / 5, font, trans);
 	}
 
 		// Third entry
-	drawText(mCursor, 2 * mSize.y() / 5, font, trans);
+	drawText(mCursor, 0.f, 2 * mSize.y() / 5, font, trans);
 
 		// Fourth entry
 	if (mCursor == size() - 1) {
-		drawText(0, 3 * mSize.y() / 5, font, trans);
+		drawText(0, 24.f, 3 * mSize.y() / 5, font, trans);
 	}
 	else {
-		drawText(mCursor + 1, 3 * mSize.y() / 5, font, trans);
+		drawText(mCursor + 1, 24.f, 3 * mSize.y() / 5, font, trans);
 	}
 
 		// Fifth entry
 	if (mCursor == size() - 2) {
-		drawText(0, 4 * mSize.y() / 5, font, trans);
+		drawText(0, 48.f, 4 * mSize.y() / 5, font, trans);
 	}
 	else if (mCursor == size() - 1) {
-		drawText(1, 4 * mSize.y() / 5, font, trans);
+		drawText(1, 48.f, 4 * mSize.y() / 5, font, trans);
 	}
 	else {
-		drawText(mCursor + 2, 4 * mSize.y() / 5, font, trans); 
+		drawText(mCursor + 2, 48.f, 4 * mSize.y() / 5, font, trans); 
 	}
 		
 		// End edits
@@ -304,7 +304,7 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 }
 
 template <typename T>
-void TextListComponent<T>::drawText(int item, float yOffset, std::shared_ptr<Font>& font, Eigen::Affine3f& trans) {
+void TextListComponent<T>::drawText(int item, float xOffset, float yOffset, std::shared_ptr<Font>& font, Eigen::Affine3f& trans) {
 
 	typename IList<TextListData, T>::Entry& entry = mEntries.at(item);
 
@@ -323,14 +323,14 @@ void TextListComponent<T>::drawText(int item, float yOffset, std::shared_ptr<Fon
 
 	/*switch(mAlignment)
 	{
-	case ALIGN_LEFT:
-		offset[0] = mHorizontalMargin;
-		break;
-	case ALIGN_CENTER:*/
+	case ALIGN_LEFT:*/
+		offset[0] = mHorizontalMargin + xOffset;
+		/*break;
+	case ALIGN_CENTER:
 		offset[0] = (mSize.x() - entry.data.textCache->metrics.size.x()) / 2;
 		if(offset[0] < 0)
 			offset[0] = 0;
-		/*break;
+		break;
 	case ALIGN_RIGHT:
 		offset[0] = (mSize.x() - entry.data.textCache->metrics.size.x());
 		offset[0] -= mHorizontalMargin;
