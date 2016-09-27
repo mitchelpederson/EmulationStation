@@ -184,11 +184,11 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 	if(startEntry < listCutoff)
 	{
 		Renderer::setMatrix(trans);
-		Renderer::drawRect(48.f,-(font->getHeight() / 2), mSize.x() - 96.f, 2 * font->getHeight(), mSelectorColor + 0x44440000);
-		Renderer::drawRect(24.f, (1 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x() - 48.f, 2 * font->getHeight(), mSelectorColor + 0x22220000);
-		Renderer::drawRect(0.f, (2 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x(), 2 * font->getHeight(), mSelectorColor);
-		Renderer::drawRect(24.f, (3 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x() - 48.f, 2 * font->getHeight(), mSelectorColor + 0x22220000);
-		Renderer::drawRect(48.f, (4 * mSize.y() / 5) -(font->getHeight() / 2), mSize.x() - 96.f, 2 * font->getHeight(), mSelectorColor + 0x44440000);
+		Renderer::drawRect(48.f,-(font->getHeight() / 2), mSize.x() - 96.f, 2 * font->getHeight(), 0x00C8F8FF);
+		Renderer::drawRect(24.f, (1 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x() - 48.f, 2 * font->getHeight(), 0x008DB1FF);
+		Renderer::drawRect(0.f, (2 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x(), 2 * font->getHeight(), 0x006E8CFF);
+		Renderer::drawRect(24.f, (3 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x() - 48.f, 2 * font->getHeight(), 0x008DB1FF);
+		Renderer::drawRect(48.f, (4 * mSize.y() / 5) -(font->getHeight() / 2), mSize.x() - 96.f, 2 * font->getHeight(), 0x00C8F8FF);
 		
 	}
 
