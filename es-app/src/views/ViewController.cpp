@@ -262,11 +262,16 @@ bool ViewController::input(InputConfig* config, Input input)
 	if(mLockInput)
 		return true;
 
+
+	if(config->isMappedTo("start", input)) {
+		mWindow->pushGui(new GuiMenu(mWindow));
+		return true;
+	}
 	
 
 	// open menu
 	//if(config->isMappedTo("start", input) && config->isMappedTo("y", input) && config->isMappedTo("x", input) && input.value != 0)
-	if(config->isMappedTo("start", input) && input.value != 0)	
+	/*if(config->isMappedTo("start", input) && input.value != 0)	
 	{	
 		timeStart = clock();
 		if (((timeStart - timeX) / (float) CLOCKS_PER_SEC) < 0.1 && ((timeStart - timeY) / (float) CLOCKS_PER_SEC) < 0.1) {
@@ -294,7 +299,7 @@ bool ViewController::input(InputConfig* config, Input input)
 			mWindow->pushGui(new GuiMenu(mWindow));
 			return true;
 		}
-	}
+	}*/
 
 	if(mCurrentView)
 		return mCurrentView->input(config, input);

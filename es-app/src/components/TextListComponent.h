@@ -184,6 +184,15 @@ void TextListComponent<T>::render(const Eigen::Affine3f& parentTrans)
 	if(startEntry < listCutoff)
 	{
 		Renderer::setMatrix(trans);
+
+			// Draw Borders
+		Renderer::drawRect(46.f,-(font->getHeight() / 2) - 2.f, mSize.x() - 96.f + 4.f, 2 * font->getHeight() + 4.f, 0x676767FF);
+		Renderer::drawRect(22.f, (1 * mSize.y() / 5) - (font->getHeight() / 2) - 2.f, mSize.x() - 48.f + 4.f, 2 * font->getHeight() + 4.f, 0x676767FF);
+		Renderer::drawRect(-2.f, (2 * mSize.y() / 5) - (font->getHeight() / 2) - 2.f, mSize.x() + 4.f, 2 * font->getHeight() + 4.f, 0x676767FF);
+		Renderer::drawRect(22.f, (3 * mSize.y() / 5) - (font->getHeight() / 2) - 2.f, mSize.x() - 48.f + 4.f, 2 * font->getHeight() + 4.f, 0x676767FF);
+		Renderer::drawRect(46.f, (4 * mSize.y() / 5) -(font->getHeight() / 2) - 2.f, mSize.x() - 96.f + 4.f, 2 * font->getHeight() + 4.f, 0x676767FF);
+
+			// Draw boxes themselves
 		Renderer::drawRect(48.f,-(font->getHeight() / 2), mSize.x() - 96.f, 2 * font->getHeight(), 0x00C8F8FF);
 		Renderer::drawRect(24.f, (1 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x() - 48.f, 2 * font->getHeight(), 0x008DB1FF);
 		Renderer::drawRect(0.f, (2 * mSize.y() / 5) - (font->getHeight() / 2), mSize.x(), 2 * font->getHeight(), 0x006E8CFF);

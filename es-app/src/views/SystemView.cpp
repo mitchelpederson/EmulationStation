@@ -108,12 +108,12 @@ bool SystemView::input(InputConfig* config, Input input)
 		}
 		if(config->isMappedTo("left", input))
 		{
-			listInput(-1);
+			//listInput(-1);
 			return true;
 		}
 		if(config->isMappedTo("right", input))
 		{
-			listInput(1);
+			//listInput(1);
 			return true;
 		}
 		if(config->isMappedTo("a", input))
