@@ -72,7 +72,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			}
 				
 			return true;
-		}else if(config->isMappedTo("b", input))
+		}/*else if(config->isMappedTo("b", input))
 		{
 			if(mCursorStack.size())
 			{
@@ -86,7 +86,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			}
 
 			return true;
-		}/*else if(config->isMappedTo("right", input))
+		}else if(config->isMappedTo("right", input))
 		{
 			if(Settings::getInstance()->getBool("QuickSystemSelect"))
 			{
