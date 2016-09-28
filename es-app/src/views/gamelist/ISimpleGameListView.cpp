@@ -86,7 +86,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 			}
 
 			return true;
-		}else if(config->isMappedTo("right", input))
+		}/*else if(config->isMappedTo("right", input))
 		{
 			if(Settings::getInstance()->getBool("QuickSystemSelect"))
 			{
@@ -102,7 +102,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
 				ViewController::get()->goToPrevGameList();
 				return true;
 			}
-		}
+		}*/
 	}
 
 	return IGameListView::input(config, input);
