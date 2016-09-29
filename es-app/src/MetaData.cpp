@@ -18,7 +18,15 @@ MetaDataDecl gameDecls[] = {
 	{"genre",		MD_STRING,				"unknown",			false,		"genre",				"enter game genre"},
 	{"players",		MD_INT,					"1",				false,		"players",				"enter number of players"},
 	{"playcount",	MD_INT,					"0",				true,		"play count",			"enter number of times played"},
-	{"lastplayed",	MD_TIME,				"0", 				true,		"last played",			"enter last played date"}
+	{"lastplayed",	MD_TIME,				"0", 				true,		"last played",			"enter last played date"},
+	{"a",			MD_STRING,				"", 				false,		"a button",				"enter the control for A"},
+	{"b",			MD_STRING,				"", 				false,		"b button",				"enter the control for B"},
+	{"c",			MD_STRING,				"", 				false,		"c button",				"enter the control for C"},
+	{"x",			MD_STRING,				"", 				false,		"x button",				"enter the control for X"},
+	{"y",			MD_STRING,				"", 				false,		"y button",				"enter the control for Y"},
+	{"z",			MD_STRING,				"", 				false,		"z button",				"enter the control for Z"},
+	{"joystick",	MD_STRING,				"", 				false,		"joystick",				"enter the control for the joystick"}
+
 };
 const std::vector<MetaDataDecl> gameMDD(gameDecls, gameDecls + sizeof(gameDecls) / sizeof(gameDecls[0]));
 
