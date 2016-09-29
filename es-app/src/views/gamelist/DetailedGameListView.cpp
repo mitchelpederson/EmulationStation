@@ -221,6 +221,13 @@ void DetailedGameListView::updateInfoPanel()
 {
 	FileData* file = (mList.size() == 0 || mList.isScrolling()) ? NULL : mList.getSelected();
 
+	std::string A = "A - ";
+	std::string B = "B - ";
+	std::string C = "C - ";
+	std::string X = "X - ";
+	std::string Y = "Y - ";
+	std::string Z = "Z - ";
+
 	bool fadingOut;
 	if(file == NULL)
 	{
@@ -234,6 +241,9 @@ void DetailedGameListView::updateInfoPanel()
 
 		if(file->getType() == GAME)
 		{
+
+			std::string releaseDate = file->metadata.get("releasedate");;
+
 			mRating.setValue(file->metadata.get("rating"));
 			mReleaseDate.setValue(file->metadata.get("releasedate"));
 			mDeveloper.setValue(file->metadata.get("developer"));
@@ -244,12 +254,13 @@ void DetailedGameListView::updateInfoPanel()
 			mPlayCount.setValue(file->metadata.get("playcount"));
 			mSelect.setValue("Select");
 			mMove.setValue("Move");
-			mA.setValue("A - ");
-			mB.setValue("B - ");
-			mC.setValue("C - ");
-			mX.setValue("X - ");
-			mY.setValue("Y - ");
-			mZ.setValue("Z - ");
+
+			mA.setValue(A);
+			mB.setValue(B);
+			mC.setValue(C);
+			mX.setValue(X);
+			mY.setValue(Y);
+			mZ.setValue(Z);
 		}
 		
 		fadingOut = false;
