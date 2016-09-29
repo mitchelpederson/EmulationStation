@@ -11,15 +11,17 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root) :
 
 	mLblRating(window), mLblReleaseDate(window), mLblDeveloper(window), mLblPublisher(window), 
 	mLblGenre(window), mLblPlayers(window), mLblLastPlayed(window), mLblPlayCount(window),
-	mLblSelect(window), mLblMove(window),
+	mLblSelect(window), mLblMove(window), mLblA(window), mLblB(window), mLblC(window), mLblX(window), mLblY(window),
+	mLblZ(window),
 
 	mRating(window), mReleaseDate(window), mDeveloper(window), mPublisher(window), 
 	mGenre(window), mPlayers(window), mLastPlayed(window), mPlayCount(window),
-	mSelect(window), mMove(window)
+	mSelect(window), mMove(window), mA(window), mB(window), mC(window), mX(window), mY(window),  mZ(window)
 {
 	//mHeaderImage.setPosition(mSize.x() * 0.25f, 0);
 
 	const float padding = 0.01f;
+	lblCount = 16;
 
 	
 	mList.setPosition(mSize.x() * (0.50f + padding), mList.getPosition().y());
@@ -59,12 +61,30 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root) :
 	mLblPlayCount.setText("Times played: ");
 	addChild(&mLblPlayCount);
 	addChild(&mPlayCount);*/
-	mSelect.setText("Select");
+	//mLblSelect.setText("Select");
 	addChild(&mLblSelect);
 	addChild(&mSelect);
-	mMove.setText("Move");
+	//mLblMove.setText("Move");
 	addChild(&mLblMove);
 	addChild(&mMove);
+	//mLblA.setText("A - ");
+	addChild(&mLblA);
+	addChild(&mA);
+	//mLblB.setText("B - ");
+	addChild(&mLblB);
+	addChild(&mB);
+	//mLblC.setText("C - ");
+	addChild(&mLblC);
+	addChild(&mC);
+	//mLblX.setText("X - ");
+	addChild(&mLblX);
+	addChild(&mX);
+	//mLblY.setText("Y - ");
+	addChild(&mLblY);
+	addChild(&mY);
+	//mLblZ.setText("Z - ");
+	addChild(&mLblZ);
+	addChild(&mZ);	
 
 	/*mDescContainer.setPosition(mSize.x() * padding, mSize.y() * 0.65f);
 	mDescContainer.setSize(mSize.x() * (0.50f - 2*padding), mSize.y() - mDescContainer.getPosition().y());
@@ -90,10 +110,11 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
 
 	initMDLabels();
 	std::vector<TextComponent*> labels = getMDLabels();
-	assert(labels.size() == 10);
-	const char* lblElements[10] = {
+	assert(labels.size() == lblCount);
+	const char* lblElements[lblCount] = {
 		"md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher", 
-		"md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount", "md_lbl_select", "md_lbl_move"
+		"md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount", "md_lbl_select", "md_lbl_move",
+		"md_lbl_a", "md_lbl_b", "md_lbl_c", "md_lbl_x", "md_lbl_y", "md_lbl_z"
 	};
 	for(unsigned int i = 0; i < labels.size(); i++)
 	{
@@ -103,10 +124,11 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
 
 	initMDValues();
 	std::vector<GuiComponent*> values = getMDValues();
-	assert(values.size() == 10);
-	const char* valElements[10] = {
+	assert(values.size() == lblCount);
+	const char* valElements[lblCount] = {
 		"md_rating", "md_releasedate", "md_developer", "md_publisher", 
-		"md_genre", "md_players", "md_lastplayed", "md_playcount", "md_select", "md_move"
+		"md_genre", "md_players", "md_lastplayed", "md_playcount", "md_select", "md_move",
+		"md_a", "md_b", "md_c", "md_x", "md_y", "md_z"
 	};
 
 	for(unsigned int i = 0; i < values.size(); i++)
@@ -170,6 +192,12 @@ void DetailedGameListView::initMDValues()
 	mPlayCount.setFont(defaultFont);
 	mSelect.setFont(defaultFont);
 	mMove.setFont(defaultFont);
+	mA.setFont(defaultFont);
+	mB.setFont(defaultFont);
+	mC.setFont(defaultFont);
+	mX.setFont(defaultFont);
+	mY.setFont(defaultFont);
+	mZ.setFont(defaultFont);
 
 	float bottom = 0.0f;
 
@@ -216,6 +244,12 @@ void DetailedGameListView::updateInfoPanel()
 			mPlayCount.setValue(file->metadata.get("playcount"));
 			mSelect.setValue("Select");
 			mMove.setValue("Move");
+			mA.setValue("A - ");
+			mB.setValue("B - ");
+			mC.setValue("C - ");
+			mX.setValue("X - ");
+			mY.setValue("Y - ");
+			mZ.setValue("Z - ");
 		}
 		
 		fadingOut = false;
@@ -268,6 +302,12 @@ std::vector<TextComponent*> DetailedGameListView::getMDLabels()
 	ret.push_back(&mLblPlayCount);
 	ret.push_back(&mLblSelect);
 	ret.push_back(&mLblMove);
+	ret.push_back(&mLblA);
+	ret.push_back(&mLblB);
+	ret.push_back(&mLblC);
+	ret.push_back(&mLblX);
+	ret.push_back(&mLblY);
+	ret.push_back(&mLblZ);
 	return ret;
 }
 
@@ -284,5 +324,11 @@ std::vector<GuiComponent*> DetailedGameListView::getMDValues()
 	ret.push_back(&mPlayCount);
 	ret.push_back(&mSelect);
 	ret.push_back(&mMove);
+	ret.push_back(&mA);
+	ret.push_back(&mB);
+	ret.push_back(&mC);
+	ret.push_back(&mX);
+	ret.push_back(&mY);
+	ret.push_back(&mZ);
 	return ret;
 }
