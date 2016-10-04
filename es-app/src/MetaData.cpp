@@ -18,10 +18,16 @@ MetaDataDecl gameDecls[] = {
 	{"genre",		MD_STRING,				"unknown",			false,		"genre",				"enter game genre"},
 	{"players",		MD_INT,					"1",				false,		"players",				"enter number of players"},
 	{"playcount",	MD_INT,					"0",				true,		"play count",			"enter number of times played"},
-	{"lastplayed",	MD_TIME,				"0", 				true,		"last played",			"enter last played date"}
+	{"lastplayed",	MD_TIME,				"0", 				true,		"last played",			"enter last played date"},
+	{"A",			MD_STRING,				"", 				false,		"A",					"enter A control"},
+	{"B",			MD_STRING,				"", 				false,		"B",					"enter B control"},
+	{"C",			MD_STRING,				"", 				false,		"C",					"enter C control"},
+	{"X",			MD_STRING,				"", 				false,		"X",					"enter X control"},
+	{"Y",			MD_STRING,				"", 				false,		"Y",					"enter Y control"},	
+	{"Z",			MD_STRING,				"", 				false,		"Z",					"enter Z control"}
 };
 const std::vector<MetaDataDecl> gameMDD(gameDecls, gameDecls + sizeof(gameDecls) / sizeof(gameDecls[0]));
-
+	
 MetaDataDecl folderDecls[] = { 
 	{"name",		MD_STRING,				"", 	false}, 
 	{"desc",		MD_MULTILINE_STRING,	"", 	false},

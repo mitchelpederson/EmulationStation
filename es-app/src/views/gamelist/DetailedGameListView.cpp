@@ -11,17 +11,17 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root) :
 
 	mLblRating(window), mLblReleaseDate(window), mLblDeveloper(window), mLblPublisher(window), 
 	mLblGenre(window), mLblPlayers(window), mLblLastPlayed(window), mLblPlayCount(window),
-	mLblSelect(window), mLblMove(window), mLblA(window), mLblB(window), mLblC(window), mLblX(window), mLblY(window),
+	mLblSelect(window), mLblA(window), mLblB(window), mLblC(window), mLblX(window), mLblY(window),
 	mLblZ(window),
 
 	mRating(window), mReleaseDate(window), mDeveloper(window), mPublisher(window), 
 	mGenre(window), mPlayers(window), mLastPlayed(window), mPlayCount(window),
-	mSelect(window), mMove(window), mA(window), mB(window), mC(window), mX(window), mY(window),  mZ(window)
+	mSelect(window), mA(window), mB(window), mC(window), mX(window), mY(window),  mZ(window)
 {
 	//mHeaderImage.setPosition(mSize.x() * 0.25f, 0);
 
 	const float padding = 0.01f;
-	lblCount = 16;
+	lblCount = 15;
 
 	
 	mList.setPosition(mSize.x() * (0.50f + padding), mList.getPosition().y());
@@ -65,8 +65,8 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root) :
 	addChild(&mLblSelect);
 	addChild(&mSelect);
 	//mLblMove.setText("Move");
-	addChild(&mLblMove);
-	addChild(&mMove);
+	//addChild(&mLblMove);
+	//addChild(&mMove);
 	//mLblA.setText("A - ");
 	addChild(&mLblA);
 	addChild(&mA);
@@ -113,7 +113,7 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
 	assert(labels.size() == lblCount);
 	const char* lblElements[lblCount] = {
 		"md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher", 
-		"md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount", "md_lbl_select", "md_lbl_move",
+		"md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount", "md_lbl_select",
 		"md_lbl_a", "md_lbl_b", "md_lbl_c", "md_lbl_x", "md_lbl_y", "md_lbl_z"
 	};
 	for(unsigned int i = 0; i < labels.size(); i++)
@@ -127,7 +127,7 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
 	assert(values.size() == lblCount);
 	const char* valElements[lblCount] = {
 		"md_rating", "md_releasedate", "md_developer", "md_publisher", 
-		"md_genre", "md_players", "md_lastplayed", "md_playcount", "md_select", "md_move",
+		"md_genre", "md_players", "md_lastplayed", "md_playcount", "md_select", 
 		"md_a", "md_b", "md_c", "md_x", "md_y", "md_z"
 	};
 
@@ -191,7 +191,7 @@ void DetailedGameListView::initMDValues()
 	mLastPlayed.setFont(defaultFont);
 	mPlayCount.setFont(defaultFont);
 	mSelect.setFont(defaultFont);
-	mMove.setFont(defaultFont);
+	//mMove.setFont(defaultFont);
 	mA.setFont(defaultFont);
 	mB.setFont(defaultFont);
 	mC.setFont(defaultFont);
@@ -252,15 +252,23 @@ void DetailedGameListView::updateInfoPanel()
 			mPlayers.setValue(file->metadata.get("players"));
 			mLastPlayed.setValue(file->metadata.get("lastplayed"));
 			mPlayCount.setValue(file->metadata.get("playcount"));
-			mSelect.setValue("Select");
-			mMove.setValue("Move");
+			
+			mA.setValue(file->metadata.get("A"));
+			mB.setValue(file->metadata.get("B"));
+			mC.setValue(file->metadata.get("C"));
+			mX.setValue(file->metadata.get("X"));
+			mY.setValue(file->metadata.get("Y"));
+			mZ.setValue(file->metadata.get("Z"));
 
-			mA.setValue(A);
-			mB.setValue(B);
-			mC.setValue(C);
-			mX.setValue(X);
-			mY.setValue(Y);
-			mZ.setValue(Z);
+			mSelect.setValue("Select");
+			//mMove.setValue("Move");
+
+			mLblA.setValue(A);
+			mLblB.setValue(B);
+			mLblC.setValue(C);
+			mLblX.setValue(X);
+			mLblY.setValue(Y);
+			mLblZ.setValue(Z);
 		}
 		
 		fadingOut = false;
@@ -312,7 +320,7 @@ std::vector<TextComponent*> DetailedGameListView::getMDLabels()
 	ret.push_back(&mLblLastPlayed);
 	ret.push_back(&mLblPlayCount);
 	ret.push_back(&mLblSelect);
-	ret.push_back(&mLblMove);
+	//ret.push_back(&mLblMove);
 	ret.push_back(&mLblA);
 	ret.push_back(&mLblB);
 	ret.push_back(&mLblC);
@@ -334,7 +342,7 @@ std::vector<GuiComponent*> DetailedGameListView::getMDValues()
 	ret.push_back(&mLastPlayed);
 	ret.push_back(&mPlayCount);
 	ret.push_back(&mSelect);
-	ret.push_back(&mMove);
+	//ret.push_back(&mMove);
 	ret.push_back(&mA);
 	ret.push_back(&mB);
 	ret.push_back(&mC);

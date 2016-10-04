@@ -27,7 +27,7 @@ private:
 
 	int lblCount;
 
-	TextComponent mLblRating, mLblReleaseDate, mLblDeveloper, mLblPublisher, mLblGenre, mLblPlayers, mLblLastPlayed, mLblPlayCount, mLblSelect, mLblMove, mLblA, mLblB, mLblC, mLblX, mLblY, mLblZ;
+	TextComponent mLblRating, mLblReleaseDate, mLblDeveloper, mLblPublisher, mLblGenre, mLblPlayers, mLblLastPlayed, mLblPlayCount, mLblSelect, mLblA, mLblB, mLblC, mLblX, mLblY, mLblZ;
 
 	RatingComponent mRating;
 	DateTimeComponent mReleaseDate;
@@ -38,7 +38,7 @@ private:
 	DateTimeComponent mLastPlayed;
 	TextComponent mPlayCount;
 	TextComponent mSelect;
-	TextComponent mMove;
+	//TextComponent mMove;
 	TextComponent mA;
 	TextComponent mB;
 	TextComponent mC;
